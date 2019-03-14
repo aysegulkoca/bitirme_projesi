@@ -5,6 +5,6 @@ app_name='authentication'
 
 urlpatterns = [
 
-   url(r'^login/$', login_view, name='login'),
+   url(r'^login/$', login_view, name='login_view'),
 
 ]
