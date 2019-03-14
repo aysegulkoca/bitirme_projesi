@@ -29,7 +29,7 @@ def nmap_view(request):
                 result = result + forhost
 
             response = u"Nmap tarama sonucu: %s\n" % result
-            return render(request, 'templates/result.html', {'results': response})
+            return render(request, 'templates/scannetwork/result.html', {'results': response})
         else:
             form = NmapForm
-    return render(request, 'templates/home.html', {'form': form})
+    return render(request, 'templates/scannetwork/home.html', {'form': form})

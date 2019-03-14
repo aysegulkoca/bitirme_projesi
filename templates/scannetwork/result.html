@@ -1,17 +1,13 @@
-<html>
-    <head>
-        <title>Nmap Deneme</title>
-    </head>
-    <body>
+{% extends 'templates/scannetwork/base.html' %}
+
+{% block content %}
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
                     <form method="POST" class="post-form">{% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="save btn btn-default">Tara</button>
+                        {{ results|linebreaks }}
                      </form>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+{% endblock %}
