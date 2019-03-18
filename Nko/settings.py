@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'scannetwork',
     'authentication',
+    'reports',
 ]
 
 MIDDLEWARE = [
