@@ -21,7 +21,7 @@ def nmapscan(ip):
                     name = nmapresult[host][protocoll][port]['name']
                     version = nmapresult[host][protocoll][port]['version']
                     blank = blank + ' \n port : %s\tname : %s\tversion : %s' % (port, name, version)
-        forhost = "\n" + host + "ipli cihaz için: " + blank
+        forhost = "\n" + host + " ipli cihaz için: " + blank
         result = result + forhost
 
     response = u"Nmap tarama sonucu: %s\n" % result

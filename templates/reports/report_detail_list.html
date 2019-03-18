@@ -3,12 +3,13 @@
 {% block content %}
 
 <div class="report">
-        {% if post.published_date %}
+        <h1>{{ report.title }}</h1>
+        {% if report.created_date %}
             <div class="date">
                 {{ report.created_date }}
             </div>
         {% endif %}
-        <h1>{{ report.title }}</h1>
+        <p></p>
         <p>{{ report.text|linebreaksbr }}</p>
     </div>
 
