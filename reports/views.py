@@ -11,7 +11,7 @@ def report_list(request):
 
 def report_detail(request, pk):
     report = Report.objects.get(pk=pk)
-    return render(request, 'templates/reports/report_detail.html', {'report': report})
+    return render(request, 'templates/reports/report_detail_list.html', {'report': report})
 
 
 def report_delete(request, pk):
