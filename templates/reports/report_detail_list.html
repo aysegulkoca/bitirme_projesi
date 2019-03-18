@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'templates/base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+<div class="report">
+        {% if post.published_date %}
+            <div class="date">
+                {{ report.created_date }}
+            </div>
+        {% endif %}
+        <h1>{{ report.title }}</h1>
+        <p>{{ report.text|linebreaksbr }}</p>
+    </div>
+
+{% endblock %}
