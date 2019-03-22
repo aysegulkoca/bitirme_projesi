@@ -18,7 +18,8 @@ def nmapscan(ip):
                 if nmapresult[host][protocoll][port]['state'] == "open":
                     name = nmapresult[host][protocoll][port]['name']
                     version = nmapresult[host][protocoll][port]['version']
-                    blank = blank + ' \n port : %s\tname : %s\tversion : %s' % (port, name, version)
+                    product = nmapresult[host][protocoll][port]['product']
+                    blank = blank + ' \n port : %s\tname : %s\tversion : %s\tversion : %s' % (port, name, version, product)
         forhost = "\n" + host + " ipli cihaz için: " + blank
         result = result + forhost
 

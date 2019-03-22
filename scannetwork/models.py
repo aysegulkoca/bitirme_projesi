@@ -9,8 +9,8 @@ class Product(models.Model):
 
 
 class Version(models.Model):
-    version = models.CharField(mas_length=200, verbose_name="version")
-    product = models.ForeignKey("Product", verbose_name="product_id")
+    version = models.CharField(max_length=200, verbose_name="version")
+    product = models.ForeignKey("Product", verbose_name="product_id", on_delete=models.CASCADE)
 
 
 class Vulnerability(models.Model):
@@ -18,4 +18,4 @@ class Vulnerability(models.Model):
     description = models.TextField(verbose_name="description")
     solution = models.TextField(verbose_name="solution")
     code = models.TextField(verbose_name="code")
-    version = models.ForeignKey("Version", verbose_name="version_id")
+    version = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
