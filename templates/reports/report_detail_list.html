@@ -3,14 +3,14 @@
 {% block content %}
 
 <div class="report">
-        <h1>{{ report.title }}</h1>
+    <h1>{{ report.title }}</h1>
         {% if report.created_date %}
             <div class="date">
                 {{ report.created_date }}
             </div>
         {% endif %}
-        <p></p>
-        <p>{{ report.text|linebreaksbr }}</p>
-    </div>
+    <p></p>
+    <p>{{ report.text|linebreaksbr }}</p>
+</div>
 
 {% endblock %}
