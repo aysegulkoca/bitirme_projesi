@@ -19,7 +19,7 @@ def nmapscan(ip):
                     name = nmapresult[host][protocoll][port]['name']
                     version = nmapresult[host][protocoll][port]['version']
                     product = nmapresult[host][protocoll][port]['product']
-                    blank = blank + ' \n port : %s\tname : %s\tversion : %s\tversion : %s' % (port, name, version, product)
+                    blank = blank + ' \n port : %s\t\t\tname : %s\t\t\tversion : %s\t\t\türün : %s' % (port, name, version, product)
         forhost = "\n" + host + " ipli cihaz için: " + blank
         result = result + forhost
 
