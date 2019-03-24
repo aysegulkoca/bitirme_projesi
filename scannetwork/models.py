@@ -3,9 +3,16 @@ from django.db import models
 # Create your models here.
 
 
+class Product(models.Model):
+    product_name = models.CharField(max_length=200, verbose_name="product_service")
+    service_id = models.ForeignKey("Service", verbose_name="service_id", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product_name
+
+
 class Service(models.Model):
     service_name = models.CharField(max_length=200, verbose_name="product_name")
-    product = models.CharField(max_length=200, verbose_name="product_service")
 
     def __str__(self):
         return self.service_name
@@ -13,10 +20,17 @@ class Service(models.Model):
 
 class Version(models.Model):
     version = models.CharField(max_length=200, verbose_name="version")
-    service = models.ForeignKey("Service", verbose_name="service_id", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.version
+
+
+class ServiceVersion(models.Model):
+    version_id = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
+    service_id = models.ForeignKey("Service", verbose_name="service_id", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
 
 
 class Vulnerability(models.Model):
@@ -24,7 +38,7 @@ class Vulnerability(models.Model):
     description = models.TextField(verbose_name="description")
     solution = models.TextField(verbose_name="solution")
     code = models.TextField(verbose_name="code")
-    version = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
+    version_id = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.vulnerability
