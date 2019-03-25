@@ -37,7 +37,7 @@ class Vulnerability(models.Model):
     vulnerability = models.CharField(max_length=200, verbose_name="vulnerability")
     description = models.TextField(verbose_name="description")
     solution = models.TextField(verbose_name="solution")
-    code = models.TextField(verbose_name="code")
+    score = models.FloatField(verbose_name="score")
     version_id = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
 
     def __str__(self):
