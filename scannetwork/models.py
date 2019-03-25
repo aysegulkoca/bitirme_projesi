@@ -39,6 +39,8 @@ class Vulnerability(models.Model):
     solution = models.TextField(verbose_name="solution")
     score = models.FloatField(verbose_name="score")
     version_id = models.ForeignKey("Version", verbose_name="version_id", on_delete=models.CASCADE)
+    product_id = models.ForeignKey("Product", verbose_name="product_id", on_delete=models.CASCADE)
+    service_id = models.ForeignKey("Service", verbose_name="service_id", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.vulnerability
