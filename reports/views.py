@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from scannetwork.views import nmapscan
 from .models import Report
@@ -19,7 +20,7 @@ def report_new(request):
 
             report.ip = ip
             report.title = title
-            report.text = response
+            report.content = json.dumps(response)
             report.save()
             return redirect('report_list')
     else:
@@ -34,7 +35,10 @@ def report_list(request):
 
 def report_detail(request, pk):
     report = Report.objects.get(pk=pk)
-    return render(request, 'templates/reports/report_detail_list.html', {'report': report})
+    title = report.title
+    content = json.loads(report.content)
+    date = report.created_date
+    return render(request, 'templates/reports/report_detail_list.html', {'title': title, 'content': content, 'date': date})
 
 
 def report_delete(request, pk):

@@ -3,14 +3,26 @@
 {% block content %}
 
 <div class="report">
-    <h1>{{ report.title }}</h1>
-        {% if report.created_date %}
+    <h1>{{ title }}</h1>
+        {% if date %}
             <div class="date">
-                {{ report.created_date }}
+                {{ date }}
             </div>
         {% endif %}
     <p></p>
-    <p>{{ report.text|linebreaksbr }}</p>
+    {% for ip in content %}
+    <p>{{ ip }}li cihaz için:</p>
+        {% for ports in content.values %}
+            {% for port , port_content in ports.items %}
+                <p>{{ port }}
+                {% for port_content_key, port_content_value in port_content.items %}
+                    {% if port_content_key is not vulnerability %}
+                        | {{ port_content_key }} : {{ port_content_value }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
 </div>
 
 {% endblock %}

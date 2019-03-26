@@ -9,24 +9,20 @@ def nmapscan(ip):
     nmapresult = nmap.PortScanner()
     nmapresult.scan(ip, arguments='-sV --script firewall-bypass')
 
-    result = ""
+    result = {}
     for host in nmapresult.all_hosts():
-        blank = ""
-        prototocols = nmapresult[host].all_protocols()
-        for protocoll in prototocols:
-            ports = nmapresult[host][protocoll].keys()
-            for port in ports:
+        port_dic = {}
+        for protocoll in nmapresult[host].all_protocols():
+            for port in nmapresult[host][protocoll].keys():
                 if nmapresult[host][protocoll][port]['state'] == "open":
                     name = nmapresult[host][protocoll][port]['name']
                     version = nmapresult[host][protocoll][port]['version']
                     product = nmapresult[host][protocoll][port]['product']
                     vulnerability = searchvulnerability(name, version, product)
-                    blank = blank + ' \n port : %s\t\t\tname : %s\t\t\tversion : %s\t\t\türün : %s\nzafiyetleri: \n%s' % (port, name, version, product, vulnerability)
-        forhost = "\n" + host + " ipli cihaz için: " + blank
-        result = result + forhost
+                    port_dic.setdefault(port, {'service': name, 'version': version, 'product': product, 'vulnerability': vulnerability})
+                    result.setdefault(host, port_dic)
 
-    response = u"Nmap tarama sonucu: %s\n" % result
-    return response
+    return result
 
 
 def searchvulnerability(service, version, product):
@@ -44,15 +40,15 @@ def searchvulnerability(service, version, product):
     except Product.DoesNotExist:
         product_id = None
 
-    vulnerability = ""
+    vulnerability = []
     if version_id is not None and product_id is not None and service_id is not None:
         for data in Vulnerability.objects.filter(product_id=product_id, version_id=version_id, service_id=service_id):
-            vulnerability = vulnerability + '\n' + data.vulnerability
+            vulnerability.append(data.vulnerability)
     elif version_id is not None and service_id is not None:
         for data in Vulnerability.objects.filter(version_id=version_id, service_id=service_id):
-            vulnerability = vulnerability + '\n' + data.vulnerability
+            vulnerability.append(data.vulnerability)
     else:
-        vulnerability = ""
+        vulnerability = []
 
     return vulnerability
 
