@@ -1,6 +1,7 @@
-{% extends 'templates/base.html' %}
+{% extends 'templates/reports/base.html' %}
 
 {% block content %}
+
 
 <div class="report">
     <h1>{{ title }}</h1>
@@ -16,8 +17,12 @@
             {% for port , port_content in ports.items %}
                 <p>{{ port }}
                 {% for port_content_key, port_content_value in port_content.items %}
-                    {% if port_content_key is not vulnerability %}
+                    {% if port_content_key != "vulnerability" %}
                         | {{ port_content_key }} : {{ port_content_value }}
+                    {% elif port_content_key == "vulnerability" %}
+                        {% for vul in port_content_value %}
+                           <p> {{ vul }} |
+                        {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% endfor %}
