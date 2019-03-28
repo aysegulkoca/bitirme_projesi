@@ -12,40 +12,44 @@
         {% endif %}
     <p></p>
 
-    <div class="table-responsive">
-    <table class="table">
-        <thead>
-          <tr>
-              <th>Port Numarası</th>
-              <th>Ürün</th>
-              <th>Versiyon</th>
-              <th>Zafiyetleri</th>
-              <th>Çalışan Servis</th>
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th>Port Numarası</th>
+                      <th>Ürün</th>
+                      <th>Versiyon</th>
+                      <th>Zafiyetleri</th>
+                      <th>Çalışan Servis</th>
 
-          </tr>
-        </thead>
-        <tbody>
-            {% for ip in content %}
-                <p>{{ ip }}li cihaz için:</p>
-                    {% for ports in content.values %}
-                        {% for port , port_content in ports.items %}
-                        <tr>
-                            <td>{{ port }}</td>
-                            {% for port_content_key, port_content_value in port_content.items %}
-                                {% if port_content_key != "vulnerability" %}
-                                    <td>{{ port_content_value }}</td>
-                                {% elif port_content_key == "vulnerability" %}
-                                    {% for vul in port_content_value %}
-                                       <td><a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }}</a></td>
-                                    {% endfor %}
-                                {% endif %}
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for ip in content %}
+                        <p>{{ ip }}li cihaz için:</p>
+                            {% for ports in content.values %}
+                                {% for port , port_content in ports.items %}
+                                <tr>
+                                    <td>{{ port }}</td>
+                                        {% for port_content_key, port_content_value in port_content.items %}
+                                            {% if port_content_key != "vulnerability" %}
+                                                <td>{{ port_content_value }}</td>
+                                            {% elif port_content_key == "vulnerability" %}
+                                                <td>
+                                                {% for vul in port_content_value %}
+                                                   <p>
+                                                   <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>                                    {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                 </tr>
+                                {% endfor %}
                             {% endfor %}
-                         </tr>
-                        {% endfor %}
                     {% endfor %}
-            {% endfor %}
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
