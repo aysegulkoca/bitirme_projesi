@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('authencation/', include('authentication.urls')),
     path('', include('reports.urls')),
+    path('cve/', include('scannetwork.urls')),
 ]

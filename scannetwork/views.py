@@ -52,3 +52,7 @@ def searchvulnerability(service, version, product):
 
     return vulnerability
 
+
+def cve_detail(request, vulnerability):
+    cve = Vulnerability.objects.get(vulnerability=vulnerability)
+    return render(request, 'templates/scannetwork/cve_detail.html', {'cve': cve})

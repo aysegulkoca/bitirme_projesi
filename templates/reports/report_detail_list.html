@@ -11,23 +11,43 @@
             </div>
         {% endif %}
     <p></p>
-    {% for ip in content %}
-    <p>{{ ip }}li cihaz için:</p>
-        {% for ports in content.values %}
-            {% for port , port_content in ports.items %}
-                <p>{{ port }}
-                {% for port_content_key, port_content_value in port_content.items %}
-                    {% if port_content_key != "vulnerability" %}
-                        | {{ port_content_key }} : {{ port_content_value }}
-                    {% elif port_content_key == "vulnerability" %}
-                        {% for vul in port_content_value %}
-                           <p> {{ vul }} |
+
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+          <tr>
+              <th>Port Numarası</th>
+              <th>Ürün</th>
+              <th>Versiyon</th>
+              <th>Zafiyetleri</th>
+              <th>Çalışan Servis</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for ip in content %}
+                <p>{{ ip }}li cihaz için:</p>
+                    {% for ports in content.values %}
+                        {% for port , port_content in ports.items %}
+                        <tr>
+                            <td>{{ port }}</td>
+                            {% for port_content_key, port_content_value in port_content.items %}
+                                {% if port_content_key != "vulnerability" %}
+                                    <td>{{ port_content_value }}</td>
+                                {% elif port_content_key == "vulnerability" %}
+                                    {% for vul in port_content_value %}
+                                       <td><a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }}</a></td>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                         </tr>
                         {% endfor %}
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
             {% endfor %}
-        {% endfor %}
-    {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
 </div>
 
 {% endblock %}
