@@ -18,33 +18,28 @@
                 <thead>
                   <tr>
                       <th>Port Numarası</th>
-                      <th>Ürün</th>
-                      <th>Versiyon</th>
-                      <th>Zafiyetleri</th>
                       <th>Çalışan Servis</th>
+                      <th>Versiyon</th>
+                      <th>Ürün</th>
+                      <th>Zafiyetleri</th>
 
                   </tr>
                 </thead>
                 <tbody>
                     {% for ip in content %}
-                        <p>{{ ip }}li cihaz için:</p>
+                        <p>{{ ip }}li cihaz için: </p>
                             {% for ports in content.values %}
                                 {% for port , port_content in ports.items %}
                                 <tr>
                                     <td>{{ port }}</td>
-                                        {% for port_content_key, port_content_value in port_content.items %}
-                                            {% if port_content_key != "vulnerability" %}
-                                                <td>{{ port_content_value }}</td>
-                                            {% elif port_content_key == "vulnerability" %}
-                                                <td>
-                                                {% for vul in port_content_value %}
-                                                   <p>
-                                                   <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>                                    {% endfor %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </td>
+                                        <td>{{ port_content.service }}</td>
+                                        <td>{{ port_content.version }}</td>
+                                        <td>{{ port_content.product }}</td>
+                                        <td>{% for vul in port_content.vulnerability %}
+                                            <p>
+                                            <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>                                    {% endfor %}
+                                        {% endfor %}</td>
                                  </tr>
-                                {% endfor %}
                             {% endfor %}
                     {% endfor %}
                 </tbody>
