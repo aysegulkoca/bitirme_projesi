@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'authentication',
     'reports',
     'scannetwork',
+    'scannetwork.templatetags',
 ]
 
 MIDDLEWARE = [

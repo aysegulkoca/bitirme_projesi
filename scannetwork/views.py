@@ -2,6 +2,7 @@ from django.shortcuts import render
 import nmap
 from .models import Vulnerability, Product, Service, Version
 
+
 # Create your views here.
 
 
@@ -56,3 +57,5 @@ def searchvulnerability(service, version, product):
 def cve_detail(request, vulnerability):
     cve = Vulnerability.objects.get(vulnerability=vulnerability)
     return render(request, 'templates/scannetwork/cve_detail.html', {'cve': cve})
+
+

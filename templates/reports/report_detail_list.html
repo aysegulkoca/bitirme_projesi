@@ -1,4 +1,5 @@
 {% extends 'templates/reports/base.html' %}
+{% load poll_extras %}
 
 {% block content %}
 
@@ -22,6 +23,7 @@
                       <th>Versiyon</th>
                       <th>Ürün</th>
                       <th>Zafiyetleri</th>
+                      <th>Ortalama Risk Puanı</th>
 
                   </tr>
                 </thead>
@@ -37,9 +39,11 @@
                                         <td>{{ port_content.product }}</td>
                                         <td>{% for vul in port_content.vulnerability %}
                                             <p>
-                                            <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>                                    {% endfor %}
-                                        {% endfor %}</td>
-                                 </tr>
+                                            <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>
+                                            {% endfor %}</td>
+                                        <td>{% calculate_cve_score port_content.vulnerability %}</td>
+                                {% endfor %}
+                                </tr>
                             {% endfor %}
                     {% endfor %}
                 </tbody>
