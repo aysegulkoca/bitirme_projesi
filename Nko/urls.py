@@ -16,9 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('scannetwork.urls')),
-    path('authencation/', include('authentication.urls')),
+    path('authentication/', include('authentication.urls')),
 ]
