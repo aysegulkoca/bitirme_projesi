@@ -1,0 +1,25 @@
+{% extends 'templates/reports/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ cve }} | CVSS Skoru: {{ cve.score }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Açıklaması: <p><p>{{ cve.description }}</td>
+                </tr>
+                <tr>
+                    <td>Çözüm Önerisi: <p><p>{{cve.solution }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

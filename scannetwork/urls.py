@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
-    path('index/', views.nmap_view, name='nmap_view'),
+    path('detail/<vulnerability>', views.cve_detail, name='cve_detail'),
 ]

@@ -1,0 +1,12 @@
+{% extends 'templates/reports/base.html' %}
+
+{% block content %}
+
+{% for report in reports %}
+
+        <div class="report">
+            <h1><a href="{% url 'report_detail' pk=report.pk %}">{{ report.title }}</a></h1>
+        </div>
+    {% endfor %}
+
+{% endblock %}

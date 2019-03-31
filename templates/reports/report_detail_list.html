@@ -1,0 +1,56 @@
+{% extends 'templates/reports/base.html' %}
+{% load poll_extras %}
+
+{% block content %}
+
+
+<div class="report">
+    <h1>{{ title }}</h1>
+        {% if date %}
+            <div class="date">
+                {{ date }}
+            </div>
+        {% endif %}
+    <p></p>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th>Port Numarası</th>
+                      <th>Çalışan Servis</th>
+                      <th>Versiyon</th>
+                      <th>Ürün</th>
+                      <th>Zafiyetleri</th>
+                      <th>Ortalama Risk Puanı</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for ip in content %}
+                        <p>{{ ip }}li cihaz için: </p>
+                            {% for ports in content.values %}
+                                {% for port , port_content in ports.items %}
+                                <tr>
+                                    <td>{{ port }}</td>
+                                        <td>{{ port_content.service }}</td>
+                                        <td>{{ port_content.version }}</td>
+                                        <td>{{ port_content.product }}</td>
+                                        <td>{% for vul in port_content.vulnerability %}
+                                            <p>
+                                            <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>
+                                            {% endfor %}</td>
+                                        <td>{% calculate_cve_score port_content.vulnerability %}</td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

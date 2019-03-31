@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'scannetwork',
     'authentication',
+    'reports',
+    'scannetwork',
+    'scannetwork.templatetags',
 ]
 
 MIDDLEWARE = [
@@ -121,8 +123,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 STATIC_ROOT = os.path.join(BASE_DIR, "static/staticfiles")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+=======
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'authentication/static')
+]
+>>>>>>> 89e624aec2a2c9415a01c777f0ab07a233fc52e5
