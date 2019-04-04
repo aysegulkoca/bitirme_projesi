@@ -18,12 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('', include('scannetwork.urls')),
-    path('authentication/', include('authentication.urls')),
-=======
-    path('authencation/', include('authentication.urls')),
+
+    path('auth/', include('authentication.urls')),
+
     path('', include('reports.urls')),
     path('cve/', include('scannetwork.urls')),
->>>>>>> 89e624aec2a2c9415a01c777f0ab07a233fc52e5
 ]
