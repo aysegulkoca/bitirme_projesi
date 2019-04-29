@@ -7,10 +7,9 @@
 <div class="report">
     <h1>{{ title }}</h1>
         {% if date %}
-            <div class="date">
-                {{ date }}
-            </div>
+            <h5>{{ date }}</h5>
         {% endif %}
+    <p></p>
     <p></p>
 
     <div class="container">
@@ -29,7 +28,7 @@
                 </thead>
                 <tbody>
                     {% for ip in content %}
-                        <p>{{ ip }}li cihaz için: </p>
+                        <h4>{{ ip }} IP'li cihaz için: </h4>
                             {% for ports in content.values %}
                                 {% for port , port_content in ports.items %}
                                 <tr>

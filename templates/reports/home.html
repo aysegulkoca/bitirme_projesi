@@ -1,14 +1,33 @@
 {% extends 'templates/reports/base.html' %}
+{% load static %}
 
 {% block content %}
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
-                    <form method="POST" class="post-form">{% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="save btn btn-default">Tara</button>
-                     </form>
-                </div>
+<div class="wrapper">
+    <div class="rows">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'images/nko.png' %}" class="cat">
+                <h1>N-Ko Hakkında</h1>
+                <h4>Ulaşabildikleri her yere sızmakta usta olan kedilerden ilham alarak yola çıktığımız bu projede
+                maskotumuz, gece görüşü yetisi gelişmiş bir kedidir. Japoncada kedi anlamına gelen "Neko" ise N-Ko
+                isminin doğuşuna esprili bir katkı sağlamıştır. Buradan tüm kedilere ve Japonlara katkıları için
+                ayrıca teşekkür ederiz. </h4>
+            </div>
+            <div class="col-md-4">
+                <form method="POST" class="post-form">{% csrf_token %}
+                    <h5>{{ form.as_p }}
+                    <button type="submit" class="save btn">Tara</button></h5>
+                </form>
+            </div>
+            <div class="col-md-6 infotext">
+                <h4>* Title kısmı oluşturulacak raporun başlık bilgisidir.</h4>
+                <h4>* IP kısmı taranacak cihaz ya da ağ bilgisinin verildiği kısımdır.</h4>
+                <h4>* Tek bir cihaz için, cihaza ait IP'nin yazılması yeterlidir.</h4>
+                <h4>* Eğer bir ağ taranmak isteniyorsa __.__.__.0/24 ifadesi yazılmalıdır.
+                İlk üç boşluk bilinen IP'nin ilk üç oktetine karşılık gelmektedir.</h4>
             </div>
         </div>
+    </div>
+</div>
+
 {% endblock %}
