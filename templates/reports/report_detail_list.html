@@ -7,7 +7,7 @@
 <div class="report">
     <h1>{{ title }}</h1>
         {% if date %}
-            <h5>{{ date }}</h5>
+            <h4>{{ date }}</h4>
         {% endif %}
     <p></p>
     <p></p>
@@ -17,12 +17,12 @@
             <table class="table">
                 <thead>
                   <tr>
-                      <th>Port Numarası</th>
-                      <th>Çalışan Servis</th>
-                      <th>Versiyon</th>
-                      <th>Ürün</th>
-                      <th>Zafiyetleri</th>
-                      <th>Ortalama Risk Puanı</th>
+                      <h3><th>Port Numarası</th></h3>
+                      <h3><th>Çalışan Servis</th></h3>
+                      <h3><th>Versiyon</th></h3>
+                      <h3><th>Ürün</th></h3>
+                      <h3><th>Zafiyetleri</th></h3>
+                      <h3><th>Ortalama Risk Seviyesi</th></h3>
 
                   </tr>
                 </thead>
@@ -33,14 +33,14 @@
                                 {% for port , port_content in ports.items %}
                                 <tr>
                                     <td>{{ port }}</td>
-                                        <td>{{ port_content.service }}</td>
-                                        <td>{{ port_content.version }}</td>
-                                        <td>{{ port_content.product }}</td>
+                                        <td><h5>{{ port_content.service }}</h5></td>
+                                        <td><h5>{{ port_content.version }}</h5></td>
+                                        <td><h5>{{ port_content.product }}</h5></td>
                                         <td>{% for vul in port_content.vulnerability %}
                                             <p>
-                                            <a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a>
+                                            <h5><a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a></h5>
                                             {% endfor %}</td>
-                                        <td>{% calculate_cve_score port_content.vulnerability %}</td>
+                                        <h5><td>{% calculate_cve_risk_score port_content.vulnerability %}</td></h5>
                                 {% endfor %}
                                 </tr>
                             {% endfor %}

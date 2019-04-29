@@ -7,7 +7,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>{{ cve }} | CVSS Skoru: {{ cve.score }}</th>
+                    <th>{{ cve }} | CVSS Skoru: {{ cve.cvss_score }} | Riski: {{ cve.risk_score }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -15,7 +15,7 @@
                     <td>Açıklaması: <p><p>{{ cve.description }}</td>
                 </tr>
                 <tr>
-                    <td>Çözüm Önerisi: <p><p>{{cve.solution }}</td>
+                    <td>Çözüm Önerisi: <p><p>{{cve.solution|linebreaks }}</td>
                 </tr>
             </tbody>
         </table>
