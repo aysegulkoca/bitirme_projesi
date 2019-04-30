@@ -23,4 +23,5 @@ urlpatterns = [
 
     path('', include('reports.urls')),
     path('cve/', include('scannetwork.urls')),
+    path('scan/', include('scanweb.urls')),
 ]

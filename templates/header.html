@@ -8,8 +8,11 @@
         <nav class="collapse navbar-collapse" role="navigation">
 
             <ul class="nav navbar-nav navbar-right">
-            <h4><a href="{% url 'report_new' %}" class="link">Tarama Yap</a>
-            <a href="{% url 'report_list' %}" class="link">Raporları Görüntüle</a></h4>
+                <h4>
+                    <a href="{% url 'report_new' %}" class="link">Tarama Yap</a>
+                    <a href="{% url 'scanweb:scan_web' %}" class="link">Web Tarama Yap</a>
+                    <a href="{% url 'report_list' %}" class="link">Raporları Görüntüle</a>
+                </h4>
             </ul>
 
         </nav>

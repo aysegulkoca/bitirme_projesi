@@ -1,0 +1,31 @@
+{% extends 'templates/reports/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="rows">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'images/nko.png' %}" class="cat">
+                <h1>N-Ko Hakkında</h1>
+                <h4>Ulaşabildikleri her yere sızmakta usta olan kedilerden ilham alarak yola çıktığımız bu projede
+                maskotumuz, gece görüşü yetisi gelişmiş bir kedidir. Japoncada kedi anlamına gelen "Neko" ise N-Ko
+                isminin doğuşuna esprili bir katkı sağlamıştır. Buradan tüm kedilere ve Japoncayı türetenlere katkıları
+                için ayrıca teşekkür ederiz. </h4>
+            </div>
+            <div class="col-md-4">
+                <form method="POST" class="post-form">{% csrf_token %}
+                    <h5>{{ form.as_p }}
+                    <button type="submit" class="save btn">Tara</button></h5>
+                </form>
+            </div>
+            <div class="col-md-6 infotext">
+                <h4>* Title kısmı oluşturulacak raporun başlık bilgisidir.</h4>
+                <h4>* URL kısmı taranacak URL bilgisinin verildiği kısımdır.</h4>
+                <h4>* Burdan sonraki adımlar aktif tarama içermektedir.</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
