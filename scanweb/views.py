@@ -10,29 +10,37 @@ def scan_web(request):
     if request.method == 'POST':
         form = WebForm(request.POST)
         if form.is_valid():
+            total=0
             url = form.cleaned_data.get('url')
             title = form.cleaned_data.get('title')
-            # queries = open("scanweb\queries.txt")
-            # data = queries.readlines()
-            # for i in range(len(data)):
-            #     query = data[i]
-            #     newUrl = url + query
-            #     resp = req.get(newUrl)
-            #     source = BeautifulSoup(resp.content,"html")
-            #
-            #     if source==" ":
-            #         o = "SQL Injection zafiyeti barındırıyor olabilir. ÖNERİ vs"
-            #         break
-            #
-            #     sqlinjection = open("scanweb\sqlinjection.txt")
-            #     sdata = sqlinjection.readlines()
-            #     for i in range(len(sdata)):
-            #         finds = source.find(string=re.compile(sdata[i]))
-            #         if finds:
+            queries = open("scanweb\queries.txt")
+            data = queries.readlines()
 
+            respx = req.get(url)
+            sourcex = BeautifulSoup(respx.content, 'html.parser')
+            findsx = sourcex.find("body")
 
+            for i in range(len(data)):
+                query = data[i]
+                newUrl = url + query
+                resp = req.get(newUrl)
+                source = BeautifulSoup(resp.content,'html.parser')
 
-        return render(request, 'templates/scanweb/scanweb_detail.html', {'o': o})
+                if source==" ":
+                    total+=1
+
+                sqlinjection = open("scanweb\sqlinjection.txt")
+                sdata = sqlinjection.readlines()
+                for j in range(len(sdata)):
+                    finds = source.find(string=re.compile(sdata[j]))
+                    if finds!=None:
+                        total+=1
+
+            if total ==0:
+                output = "SQL Injection zafiyeti barındırmıyor!"
+            else:
+                output = "vaar"
+        return render(request, 'templates/scanweb/scanweb_detail.html', {'output': output})
 
     else:
 
