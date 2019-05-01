@@ -2,5 +2,6 @@
 {% load poll_extras %}
 
 {% block content %}
-    {{ output }}
+    {{ sqlInj }} <br><br>
+    {{ xssVuln }}
 {% endblock %}
