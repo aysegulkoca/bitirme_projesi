@@ -2,6 +2,13 @@
 {% load poll_extras %}
 
 {% block content %}
-    {{ sqlInj }} <br><br>
-    {{ xssVuln }}
+    <h1>{{ title }}</h1>
+    {% if date %}
+            <h4>{{ date }}</h4>
+        {% endif %}
+    <p></p>
+    <p></p>
+    <h4> {{ url }}  URL'li cihaz için: </h4><br><br>
+    <p>SQL İnjection Zafiyeti:{{ sqlInj }}<br><br></p>
+    <p>XSS Zafiyeti: {{ xssVuln }}</p>
 {% endblock %}
