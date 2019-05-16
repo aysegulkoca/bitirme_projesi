@@ -7,23 +7,26 @@ from .models import Vulnerability, Product, Service, Version
 
 
 def nmapscan(ip):
-    nmapresult = nmap.PortScanner()
-    nmapresult.scan(ip, arguments='-sV --script firewall-bypass')
+    try:
+        nmapresult = nmap.PortScanner()
+        nmapresult.scan(ip, arguments='-sV --script firewall-bypass')
 
-    result = {}
-    for host in nmapresult.all_hosts():
-        port_dic = {}
-        for protocoll in nmapresult[host].all_protocols():
-            for port in nmapresult[host][protocoll].keys():
-                if nmapresult[host][protocoll][port]['state'] == "open":
-                    name = nmapresult[host][protocoll][port]['name']
-                    version = nmapresult[host][protocoll][port]['version']
-                    product = nmapresult[host][protocoll][port]['product']
-                    vulnerability = searchvulnerability(name, version, product)
-                    port_dic.setdefault(port, {'service': name, 'version': version, 'product': product, 'vulnerability': vulnerability})
-                    result.setdefault(host, port_dic)
+        result = {}
+        for host in nmapresult.all_hosts():
+            port_dic = {}
+            for protocoll in nmapresult[host].all_protocols():
+                for port in nmapresult[host][protocoll].keys():
+                    if nmapresult[host][protocoll][port]['state'] == "open":
+                        name = nmapresult[host][protocoll][port]['name']
+                        version = nmapresult[host][protocoll][port]['version']
+                        product = nmapresult[host][protocoll][port]['product']
+                        vulnerability = searchvulnerability(name, version, product)
+                        port_dic.setdefault(port, {'service': name, 'version': version, 'product': product, 'vulnerability': vulnerability})
+                        result.setdefault(host, port_dic)
 
-    return result
+        return result
+    except ImportError:
+        os.system("pip install python-nmap")
 
 
 def searchvulnerability(service, version, product):

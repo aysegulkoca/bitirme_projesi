@@ -12,15 +12,18 @@ def scan_web(request):
         if form.is_valid():
             url = form.cleaned_data.get('url')
             title = form.cleaned_data.get('title')
-            sqlInj = sql_injection(url)
-            xssVuln = xss(url)
-            bs4(url)
-        return render(request, 'templates/scanweb/scanweb_detail.html', {
-            'url': url,
-            'title':title,
-            'sqlInj': sqlInj,
-            'xssVuln':xssVuln
-        })
+            try:
+                sqlInj = sql_injection(url)
+                xssVuln = xss(url)
+                bs4(url)
+                return render(request, 'templates/scanweb/scanweb_detail.html', {
+                    'url': url,
+                    'title':title,
+                    'sqlInj': sqlInj,
+                    'xssVuln':xssVuln
+                })
+            except ImportError:
+                os.system("pip install requests re beautifulsoup4")
     else:
         form = WebForm()
         return render(request, 'templates/scanweb/scanweb.html', {'form': form})

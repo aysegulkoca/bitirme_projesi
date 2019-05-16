@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render, redirect
 from scannetwork.views import nmapscan
+from django.core.paginator import Paginator
 from .models import Report
 from .forms import ReportForm
 
@@ -29,7 +30,11 @@ def report_new(request):
 
 
 def report_list(request):
-    reports = Report.objects.all()
+    report_list = Report.objects.all()
+    paginator = Paginator(report_list, 5)  # her sayfada 5 rapor göster
+
+    page = request.GET.get('page')
+    reports = paginator.get_page(page)
     return render(request, 'templates/reports/report_list.html', {'reports': reports})
 
 
