@@ -1,0 +1,9 @@
+{% extends 'templates/reports/base.html' %}
+
+{% block content %}
+    {% for report in web %}
+        <div class="report">
+            <h1><a href="{% url 'scanweb_detail' pk=report.pk %}">{{ report.title }}</a></h1>
+        </div>
+    {% endfor %}
+{% endblock %}

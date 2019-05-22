@@ -1,10 +1,12 @@
 from django.shortcuts import render,HttpResponse
+from django.core.paginator import Paginator
 from .forms import WebForm
 from .models import Scanweb
 import requests as req
 import re
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
+
 
 def scan_web(request):
     if request.method == 'POST':
@@ -13,20 +15,25 @@ def scan_web(request):
             url = form.cleaned_data.get('url')
             title = form.cleaned_data.get('title')
             try:
-                sqlInj = sql_injection(url)
-                xssVuln = xss(url)
-                bs4(url)
-                return render(request, 'templates/scanweb/scanweb_detail.html', {
-                    'url': url,
-                    'title':title,
-                    'sqlInj': sqlInj,
-                    'xssVuln':xssVuln
-                })
-            except ImportError:
-                os.system("pip install requests re beautifulsoup4")
+                webreport = Scanweb()
+                webreport.url = url
+                webreport.title = title
+                webreport.sqlInjection = sql_injection(url)
+                webreport.xss = xss(url)
+                webreport.save()
+            except:
+                # yönlendirme
+                pass
+            # bs4 web for pentest için oluşturduğum bir fonk
+            bs4(url)
+
+            web = web_report_list(request)
+        return render(request, 'templates/scanweb/scanweb_report_list.html',{'web': web})
     else:
         form = WebForm()
+
         return render(request, 'templates/scanweb/scanweb.html', {'form': form})
+
 
 def sql_injection(url):
     newUrl = ''
@@ -56,11 +63,12 @@ def sql_injection(url):
                 total += 1
 
     if total == 0:
-        output = "barındırmıyor."
+        output = "BARINDIRMIYOR!"
     else:
         output = "BARINDIRIYOR!"
 
     return output
+
 
 def xss(url):
     xss = 0
@@ -94,6 +102,7 @@ def xss(url):
         xssOutput = "BARINDIRIYOR!"
     return xssOutput
 
+
 def bs4(url):
     dic = {}
     resp = req.get(url)
@@ -101,3 +110,17 @@ def bs4(url):
     dic =  soup.find_all("td")
 
     return dic
+
+
+def web_report_list(request):
+    report_list = Scanweb.objects.all()
+    paginator = Paginator(report_list, 5)  # her sayfada 5 rapor göster
+
+    page = request.GET.get('page')
+    webreposts = paginator.get_page(page)
+    return render(request, 'templates/scanweb/scanweb_report_list.html', {'webreposts': webreposts})
+
+
+def web_report_detail(request,pk):
+    webreport = Scanweb.objects.get(pk=pk)
+    return render(request, 'templates/scanweb/scanweb_detail.html', {'webreport' : webreport})

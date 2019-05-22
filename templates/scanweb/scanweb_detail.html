@@ -1,14 +1,65 @@
 {% extends 'templates/reports/base.html' %}
 {% load poll_extras %}
-
 {% block content %}
-    <h1>{{ title }}</h1>
-    {% if date %}
-            <h4>{{ date }}</h4>
+
+<div class="report">
+    <h1>{{ webreport.title }}</h1>
+        {% if webreport.created_date %}
+            <h4>{{ webreport.created_date }}</h4>
         {% endif %}
     <p></p>
     <p></p>
-    <h4> {{ url }}  URL'li cihaz için: </h4><br><br>
-    <p>SQL İnjection Zafiyeti:{{ sqlInj }}<br><br></p>
-    <p>XSS Zafiyeti: {{ xssVuln }}</p>
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                      <h3><th>SQL Injection Zafiyeti</th></h3>
+                      <h3><th>XSS Zafiyeti</th></h3>
+                  </tr>
+                </thead>
+                <tbody>
+                        <h4>{{ webreport.url }} URL'li cihaz için: </h4>
+
+                                <tr>
+                                    <td>{{ webreport.sqlInjection }}</td>
+
+                                    <td>{{ webreport.xss }}</td>
+
+                                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        {% if  webreport.sqlInjection  == "BARINDIRIYOR!" %}
+            <p><h1>SQL  Injection</h1></p>
+            <p>    Sql İnjection zafiyeti, uygulamaların veri tabanına erişme imkanı veren bir zafiyettir. Bu zafiyet veri tabanında çalıştırılan uygulama dışı SQL sorguları ile veri çalınmasına neden olmaktadır. Kullanıcıdan giriş yapılması beklenen alanlar ve url ile yapılan get/post işlemlerine müdahale edilerek gerçekleştirilmektedir.
+                Eğer bu zafiyeti barındırıyor iseniz:</p>
+            <p> • Kullanıcıdan alınan verilere güvenmeyip minimum yetki verilmesi,</p>
+            <p> • Kod içerisindeki SQL sorgularında parametre kullanmak,</p>
+            <p> • Girdileri sorgu içine vermeden önce temizleme yapılması( or, and ve özel karekter vb.),</p>
+            <p>   • Hata ve kural dışı hata mesajlarının kullanıcı tarafında gösterilmemesi,</p>
+            <p> bu zafiyetten korunmanıza yardımcı olmaktadır.</p>
+            <p>Daha detaylı bilgi için: https://www.owasp.org/index.php/SQL_Injection </p>
+        {% endif %}
+        {% if  webreport.xss == "BARINDIRIYOR!" %}
+            <p><h1>XSS</h1></p>
+            <p>XSS yani Cross-Site Scripting olarak anılan zafiyet,
+                web uygulamalarında kullanıcı girişlerinden script çalıştırmaya yöneliktir. </p>
+            <p>• Kullancı yetkilerini kısıtlamak,</p>
+            <p>• Girilen verileri temizleme işlemi( bknz: Beyaz ve Kara Liste),</p>
+            <p>• HTML tag’larının attribute’lerini çift tırnak ile açmak,</p>
+            <p>bu zafiyetten korunmanıza yardımcı olmaktadır.</p>
+            <p>Daha detaylı bilgi için: https://www.owasp.org/index.php/Cross-site_Scripting_(XSS) </p>
+
+        {% endif %}
+
+    </div>
+
 {% endblock %}
