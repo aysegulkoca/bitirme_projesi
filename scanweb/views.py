@@ -28,7 +28,7 @@ def scan_web(request):
             bs4(url)
 
             web = web_report_list(request)
-        return render(request, 'templates/scanweb/scanweb_report_list.html',{'web': web})
+        return render(request, 'templates/scanweb/scanweb_report_list.html', {'web': web})
     else:
         form = WebForm()
 

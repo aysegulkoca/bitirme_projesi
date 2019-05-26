@@ -23,7 +23,6 @@
                       <h3><th>Versiyon</th></h3>
                       <h3><th>Ürün</th></h3>
                       <h3><th>Zafiyetleri</th></h3>
-                      <h3><th>Ortalama Risk Seviyesi</th></h3>
 
                   </tr>
                 </thead>
@@ -39,9 +38,8 @@
                                         <td><h5>{{ port_content.product }}</h5></td>
                                         <td>{% for vul in port_content.vulnerability %}
                                             <p>
-                                            <h5><a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a></h5>
+                                            <h5><a href="{% url 'cve_detail' vulnerability=vul %}"> {{ vul }} </a> | Kritiklik %'desi: %{% calculate_cve_risk_score port_content.vulnerability %}</h5>
                                             {% endfor %}</td>
-                                        <h5><td>{% calculate_cve_risk_score port_content.vulnerability %}</td></h5>
                                 {% endfor %}
                                 </tr>
                             {% endfor %}

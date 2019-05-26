@@ -6,43 +6,37 @@ register = template.Library()
 
 @register.simple_tag
 def calculate_cve_risk_score(vulnerabilities):
-
     for vul in vulnerabilities:
         cve = Vulnerability.objects.get(vulnerability=vul)
-        risk = 0.0
-        version = None
-        product = None
-        try:
-            version = Version.objects.get(id=cve.version_id_id)
-            product = Product.objects.get(id=cve.product_id_id)
-        except Version.DoesNotExist:
-            version = None
-        except Product.DoesNotExist:
-            product = None
-        if version is not None and product is not None:
-            probability = 100 / version.total_vulnerability
-            risk = probability * cve.cvss_score
-        cve.risk_score = risk
+        cve.risk_score = cve.exploitability_subscore * cve.impact_subscore
         cve.save()
 
-        result = average(vulnerabilities)
-        if result < 30.0:
-            return "Çok Düşük"
-        elif 30.0 <= result < 50.0:
-            return "Düşük"
-        elif 50.0 <= result < 70.0:
-            return "Ortalama"
-        elif 70.0 <= result < 90.0:
-            return "Yüksek"
-        else:
-            return "Kritik"
+    return cve.risk_score
 
 
-def average(vulnerabilities):
-    score = 0.0
-    for vul in vulnerabilities:
+def counter(vul_list):
+    medium_risk = 0
+    high_risk = 0
+    critical_risk = 0
+
+    for vul in vul_list:
         cve = Vulnerability.objects.get(vulnerability=vul)
-        score = score + cve.risk_score
-    if len(vulnerabilities) != 0:
-        score = score/len(vulnerabilities)
-    return score
+
+        if 30.0 < cve.risk_score <= 50.0:
+            medium_risk += 1
+        elif 50.0 < cve.risk_score <= 80.0:
+            high_risk += 1
+        elif 80.0 < cve.risk_score <= 100.0:
+            critical_risk += 1
+
+    content = [medium_risk, high_risk, critical_risk]
+    return content
+
+
+@register.simple_tag
+def write(content_values):
+    port_content_list = []
+    vul_list = []
+    for ports in content_values:
+        for port_content in ports.values():
+            return port_content
