@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from django.core.paginator import Paginator
 from .forms import WebForm
 from .models import Scanweb
@@ -22,13 +22,12 @@ def scan_web(request):
                 webreport.xss = xss(url)
                 webreport.save()
             except:
-                # yönlendirme
+                redirect('scan_web')
                 pass
             # bs4 web for pentest için oluşturduğum bir fonk
             bs4(url)
 
-            web = web_report_list(request)
-        return render(request, 'templates/scanweb/scanweb_report_list.html', {'web': web})
+            return redirect('scanweb_report_list')
     else:
         form = WebForm()
 
@@ -78,16 +77,17 @@ def xss(url):
     resp = req.get(url)
     soup = BeautifulSoup(resp.content,'html.parser')
 
-    # Web Sayfalarındaki doldurulan alanalarda XSS denemesi
-    fields = {}
-    for input in soup.findAll('input'):
-        if input['type'] in ('text', 'hidden', 'password', 'image'):
-            for i in range(len(value)):
-                fields[input['name']] = value[i]
-                requests = req.post(url, fields)
-                soup2 = BeautifulSoup(requests.content, 'html.parser')
-                if value in soup2 :
-                    xss += 1
+    # # Web Sayfalarındaki doldurulan alanalarda XSS denemesi
+    # fields = {}
+    # for input in soup.findAll('input'):
+    #     if input['type'] in ('text', 'hidden', 'password', 'image'):
+    #         for i in range(len(value)):
+    #             fields[input['name']] = value[i]
+    #             requests = req.post(url, fields)
+    #             soup2 = BeautifulSoup(requests.content, 'html.parser')
+    #             if value in soup2 :
+    #                 xss += 1
+
     #Url üzerinden XSS denemesi
     for j in range(len(value)):
         val = value[j]
@@ -97,7 +97,7 @@ def xss(url):
         if val in soup3:
             xss += 1
     if xss == 0:
-        xssOutput = "barındırmıyor"
+        xssOutput = "BARINDIRMIYOR!"
     else:
         xssOutput = "BARINDIRIYOR!"
     return xssOutput
