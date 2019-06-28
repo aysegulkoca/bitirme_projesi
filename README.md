@@ -1,6 +1,7 @@
 # N-KO
 
-* Proje Ondokuz Mayıs Üniversitesi - Bitirme Projesi kapsamında gerçeklenmiştir. 
+* Proje Ondokuz Mayıs Üniversitesi - Bitirme Projesi kapsamında gerçeklenmiştir.
+* Veri tabanı şu an yetersiz durumdadır. Sadece örnek gösterimi amacıyla birkaç veri eklenmesi yapılmıştır.
 
 N-Ko’nun birincil amacı kullanıcıya kullandığı makine yahut bulunduğu ağ hakkında detaylı, düzenli bir bilgi sunmaktır. Bunu yaparken öncelikli olarak Nmap aracının temel komutları yardımıyla bir tarama işlemi gerçekleştirmektedir. Tarama işlemi arka planda, sırası ile tüm portlara gönderilen SYN paketleri ile gerçekleşmektedir. Araç, aldığı geri dönüşleri değerlendirerek makinenin/makinelerin anlık durumunu (hangi port açık, port üzerinde hangi servis çalışmakta, servisin versiyonu ve varsa ürünü vs.) elde etmektedir. Elde edilen bu parametreler N-Ko tarafından işlenilerek daha düzenli bir hale getirilmektedir ve herhangi bir saldırı uygulamandan, N-Ko’nun içerisinde bulunan veri tabanından portlara ait olası zafiyetler çekilerek listelenmektedir. Tüm bu işlemler, kullanıcının görüşüne hitap etmesi açısından bir rapor sayfasında, tablo altında tutulmaktadır. 
 
